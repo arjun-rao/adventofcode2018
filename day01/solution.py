@@ -2,15 +2,13 @@
 
 
 # Solution to part 1: Sum of given input list
-
-
-numbers = []
+NUMBERS = []
 with open('input.txt', 'r') as f:
-    numbers = [int(line) for line in f]
-print('Part1: {}'.format(sum(numbers)))
+    NUMBERS = [int(line) for line in f]
+print('Part1: {}'.format(sum(NUMBERS)))
 
 
-# Solution to part 2: Sum of given input list
+# Solution to part 2: First repeating frequency
 # Sum list one at a time, and check if current sum has occurred before.
 def solve_part2_once(changelist, frequencies, init_sum=0):
     """Finds repeated frequency once"""
@@ -32,4 +30,4 @@ def solve_part2(changelist):
     while not found:
         found, freq, current = solve_part2_once(changelist, freq, current)
 
-solve_part2(numbers)
+solve_part2(NUMBERS)
