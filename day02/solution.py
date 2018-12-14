@@ -17,12 +17,16 @@ def solve_part1(box_ids):
     return twos*threes
 
 def generate_masks(input):
+    """Generates masked strings at each position of input
+       Example: 'abcde' -> ['*bcde','a*cde','ab*de' ... ]
+    """
     masks = []
     for index in range(len(input)):
         masks.append(input[:index]+'*'+input[index+1:])
     return masks
 
 def find_common_letters(a, b):
+    """Finds common elements between strings removing 1 mismatched position"""
     mismatch = 0
     mismatch_index = -1
     for index, item in enumerate(a):
@@ -33,7 +37,10 @@ def find_common_letters(a, b):
         return a[:mismatch_index]+a[mismatch_index+1:]
     return None
 
-def solve_part2_hash(box_ids):
+def solve_part2_masks(box_ids):
+    """Returns remaining characters of first pair that differes 
+       by 1 letter in the same position using a masking approach
+    """
     seen = {}
     for item in box_ids:
         masks = generate_masks(item)
@@ -45,7 +52,7 @@ def solve_part2_hash(box_ids):
 
 def solve_part2_brute(box_ids):
     """Returns remaining characters of first pair that differes 
-       by 1 letter in the same position
+       by 1 letter in the same position using brute force
     """
     seen = []
     for box in box_ids:
@@ -65,7 +72,6 @@ def solve_part2_brute(box_ids):
                     return box[:mismatch_index]+box[mismatch_index+1:]
     return None
 
-# Solution to part 1: Checksum = Product of number of IDs with repeat 2s and 3s
 BOX_IDS = []
 with open('input.txt', 'r') as f:
     BOX_IDS = [line.strip() for line in f]
