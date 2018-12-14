@@ -1,5 +1,6 @@
 """Advent of code 2018 solution: Day 02"""
 from collections import Counter
+import string
 
 def solve_part1(box_ids):
     """Returns the checksum given a list of box ids"""
@@ -15,7 +16,34 @@ def solve_part1(box_ids):
             threes += 1
     return twos*threes
 
-def solve_part2(box_ids):
+def generate_masks(input):
+    masks = []
+    for index in range(len(input)):
+        masks.append(input[:index]+'*'+input[index+1:])
+    return masks
+
+def find_common_letters(a, b):
+    mismatch = 0
+    mismatch_index = -1
+    for index, item in enumerate(a):
+        if item != b[index]:
+            mismatch +=1
+            mismatch_index = index
+    if mismatch == 1:                    
+        return a[:mismatch_index]+a[mismatch_index+1:]
+    return None
+
+def solve_part2_hash(box_ids):
+    seen = {}
+    for item in box_ids:
+        masks = generate_masks(item)
+        for mask in masks:
+            if mask in seen:
+                return find_common_letters(item, seen[mask])
+            seen[mask] = item
+    return None
+
+def solve_part2_brute(box_ids):
     """Returns remaining characters of first pair that differes 
        by 1 letter in the same position
     """
@@ -34,7 +62,7 @@ def solve_part2(box_ids):
                 if mismatch == 1:                    
                     seen.append(box)
                     seen.append(candidate)
-                    return [(box, candidate), box[:mismatch_index]+box[mismatch_index+1:]]
+                    return box[:mismatch_index]+box[mismatch_index+1:]
     return None
 
 # Solution to part 1: Checksum = Product of number of IDs with repeat 2s and 3s
