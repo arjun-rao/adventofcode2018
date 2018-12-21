@@ -1,6 +1,6 @@
 """Advent of code 2018 solution: Day 02"""
 from collections import Counter
-import string
+
 
 def solve_part1(box_ids):
     """Returns the checksum given a list of box ids"""
@@ -33,12 +33,12 @@ def find_common_letters(a, b):
         if item != b[index]:
             mismatch +=1
             mismatch_index = index
-    if mismatch == 1:                    
+    if mismatch == 1:
         return a[:mismatch_index]+a[mismatch_index+1:]
     return None
 
 def solve_part2_masks(box_ids):
-    """Returns remaining characters of first pair that differes 
+    """Returns remaining characters of first pair that differes
        by 1 letter in the same position using a masking approach
     """
     seen = {}
@@ -51,7 +51,7 @@ def solve_part2_masks(box_ids):
     return None
 
 def solve_part2_brute(box_ids):
-    """Returns remaining characters of first pair that differes 
+    """Returns remaining characters of first pair that differes
        by 1 letter in the same position using brute force
     """
     seen = []
@@ -66,7 +66,7 @@ def solve_part2_brute(box_ids):
                     if item != box[index]:
                         mismatch +=1
                         mismatch_index = index
-                if mismatch == 1:                    
+                if mismatch == 1:
                     seen.append(box)
                     seen.append(candidate)
                     return box[:mismatch_index]+box[mismatch_index+1:]
